@@ -13,7 +13,7 @@ import java.util.*;
 public class HuffmanCode {
 	
 	
-	private HuffmanNode overallRoot; // Represents the total number of characters in algorithm
+	private HuffmanNode overallRoot; // The top node of HuffmanCode
 	
 	// post: creates a new HuffmanCode object from the given frequencies of each character
 	// to be used when compressing the given file of english characters.
@@ -48,17 +48,15 @@ public class HuffmanCode {
 		
 	}
 	// Helper Method
+	// pre: code is in a good format
 	// post: creates a new HuffmanCode object by reading a huffman code from a .code file
 	private HuffmanNode helperHuffmanCode(int asciiValue, String code, HuffmanNode root) {	
 		if(code.length() == 0) {
 			return new HuffmanNode((char) asciiValue, 0);
-		} else if (root == null) {
-			root = new HuffmanNode((char) 0, 0);
 		}
 		if(code.substring(0,1).equals("0")) {
 			root.left = helperHuffmanCode(asciiValue, code.substring(1), root.left);
-		}
-		if(code.substring(0,1).equals("1")) {
+		} else {
 			root.right = helperHuffmanCode(asciiValue, code.substring(1), root.right);
 		}
 		return root;
@@ -75,7 +73,7 @@ public class HuffmanCode {
 	// post: stores the current huffman code to the given output stream in the format of 
 	// ascii number corresponding to a english character followed by its huffman code, each
 	// on its own line. This repeats for each character and its code.
-	private String saveHelper(HuffmanNode root, PrintStream output, String s) {
+	private void saveHelper(HuffmanNode root, PrintStream output, String s) {
 		if (root != null) {	
 			if (root.character != 0) {
 				output.println((int) root.character);
@@ -84,7 +82,6 @@ public class HuffmanCode {
 			saveHelper(root.left, output, s + 0);
 			saveHelper(root.right, output, s + 1);
 		}
-		return s;
 	}
 	
 	// post: decompresses a file by reading from a given huffman code and writing the 
@@ -105,8 +102,7 @@ public class HuffmanCode {
 			int bit = input.nextBit();
 			if (bit == 0) {
 				translateHelper(input,output,root.left);
-			}
-			if (bit == 1) {
+			} else if (bit == 1) {
 				translateHelper(input,output,root.right);
 			}
 		}	
