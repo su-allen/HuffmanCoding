@@ -74,7 +74,7 @@ public class HuffmanCode {
 	// post: stores the current huffman code to the given output stream in the format of 
 	// ascii number corresponding to a english character followed by its huffman code, each
 	// on its own line. This repeats for each character and its code.
-	private String saveHelper(HuffmanNode root, PrintStream output, String s) {
+	private void saveHelper(HuffmanNode root, PrintStream output, String s) {
 		if (root != null) {	
 			if (root.character != 0) {
 				output.println((int) root.character);
@@ -83,7 +83,6 @@ public class HuffmanCode {
 			saveHelper(root.left, output, s + 0);
 			saveHelper(root.right, output, s + 1);
 		}
-		return s;
 	}
 	
 	// post: decompresses a file by reading from a given huffman code and writing the 
@@ -104,8 +103,7 @@ public class HuffmanCode {
 			int bit = input.nextBit();
 			if (bit == 0) {
 				translateHelper(input,output,root.left);
-			}
-			if (bit == 1) {
+			} else {
 				translateHelper(input,output,root.right);
 			}
 		}	
