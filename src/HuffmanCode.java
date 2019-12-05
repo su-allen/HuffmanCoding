@@ -13,7 +13,7 @@ import java.util.*;
 public class HuffmanCode {
 	
 	
-	private HuffmanNode overallRoot; // Represents the total number of characters in algorithm
+	private HuffmanNode overallRoot; // stores huffman coding algorithem
 	
 	// post: creates a new HuffmanCode object from the given frequencies of each character
 	// to be used when compressing the given file of english characters.
@@ -57,8 +57,7 @@ public class HuffmanCode {
 		}
 		if(code.substring(0,1).equals("0")) {
 			root.left = helperHuffmanCode(asciiValue, code.substring(1), root.left);
-		}
-		if(code.substring(0,1).equals("1")) {
+		} else {
 			root.right = helperHuffmanCode(asciiValue, code.substring(1), root.right);
 		}
 		return root;
@@ -99,9 +98,9 @@ public class HuffmanCode {
 	// post: reads from a given huffman code and writes the corresponding characters of 
 	// the code to the given output.
 	private void translateHelper(BitInputStream input, PrintStream output, HuffmanNode root) {
-		if(root.left == null && root.right == null) {	
-			output.write(root.character);
-		} else if(input.hasNextBit()){
+		if (root.left == null && root.right == null) {	
+			output.write((int) root.character);
+		} else if (input.hasNextBit()) {
 			int bit = input.nextBit();
 			if (bit == 0) {
 				translateHelper(input,output,root.left);
