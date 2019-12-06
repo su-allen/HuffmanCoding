@@ -111,7 +111,7 @@ public class HuffmanCode {
 	}
 	
 	//HuffmanNode class represents a single node in a tree used by the HuffmanCode class.
-	private static class HuffmanNode implements Comparable{
+	private static class HuffmanNode implements Comparable<HuffmanNode> {
     	public char character; // stores a character 
     	public int frequency; // stores frequency of character
         public HuffmanNode left; // reference to left subtree
@@ -124,9 +124,8 @@ public class HuffmanCode {
         }
         
         // post: compares the frequency of a character between two huffman nodes 
-		public int compareTo(Object other) {
-			HuffmanNode otherNode = (HuffmanNode) other;
-			return this.frequency - otherNode.frequency;
+		public int compareTo(HuffmanNode other) {
+			return this.frequency - other.frequency;
 		}
 
 
